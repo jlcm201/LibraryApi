@@ -1,0 +1,23 @@
+# Archivos generados por Visual Studio
+.vs/
+*.user
+*.userosscache
+*.suo
+*.sln.docstates
+
+# Archivos binarios
+[Bb]in/
+[Oo]bj/
+
+# Archivos de paquetes
+*.nupkg
+*.snupkg
+
+# Archivos de configuración del sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de depuración
+*.log
+
+# Otros archivos específicos de tu entorno
