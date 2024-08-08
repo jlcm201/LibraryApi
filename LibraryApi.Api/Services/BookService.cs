@@ -32,8 +32,10 @@ namespace LibraryApi.Api.Services
             {
                 Id = book.Id,
                 Title = book.Title,
-                Author = book.Author!.Name,
-                Category = book.Category!.Name,
+                AuthorId = book.AuthorId,
+                Author = (await _context.Authors.FirstOrDefaultAsync(a => a.Id == book.AuthorId))!.Name,
+                CategoryId= book.CategoryId,
+                Category = (await _context.Categories.FirstOrDefaultAsync(a => a.Id == book.CategoryId))!.Name,
                 Description = book.Description,
                 Copies = book.Copies
             };

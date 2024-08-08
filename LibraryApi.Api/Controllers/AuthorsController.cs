@@ -15,7 +15,7 @@ namespace LibraryApi.Api.Controllers
             _authorService = autorService;
         }
 
-        // GET: api/Autores
+        // GET: /Autores
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AuthorDTO>>> GetAuthors()
         {

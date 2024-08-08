@@ -15,7 +15,7 @@ namespace LibraryApi.Api.Controllers
             _categoryService = categoryService;
         }
 
-        // GET: api/Categorias
+        // GET: /Categorias
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CategoryDTO>>> GetCategories()
         {

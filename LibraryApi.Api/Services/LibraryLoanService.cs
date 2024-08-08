@@ -67,11 +67,19 @@ namespace LibraryApi.Api.Services
 
         public async Task<LibraryLoanDTO> CreateLibraryLoanAsync(LibraryLoanDTO libraryLoanDTO)
         {
+            var book = await _context.Books.FirstOrDefaultAsync(b => b.Id == libraryLoanDTO.BookId);
+            if (book != null)
+            { 
+                book.Author = await _context.Authors.FirstOrDefaultAsync(a => a.Id == book.AuthorId);
+                book.Category = await _context.Categories.FirstOrDefaultAsync(a => a.Id == book.CategoryId);
+            }
             var libraryLoan = new LibraryLoan
             {
                 BookId = libraryLoanDTO.BookId,
+                Book = book,
                 UserId = libraryLoanDTO.UserId,
-                LoanDate = DateTime.Now
+                User = await _context.Users.FirstOrDefaultAsync(a => a.Id == libraryLoanDTO.UserId),
+            LoanDate = DateTime.Now
             };
 
             _context.LibraryLoans.Add(libraryLoan);
@@ -122,7 +130,14 @@ namespace LibraryApi.Api.Services
                 })
                 .ToListAsync();
 
-            if (copiesBorrowed.Count > 0) return true;
+            var book = await _context.Books
+                .Where(p => p.DeletedOn == null)
+                .Where(p => p.Id == id)
+                .FirstOrDefaultAsync();
+
+            var availableCopies = (book != null ? book!.Copies : 0) - copiesBorrowed.Count;
+
+            if (availableCopies > 0) return true;
             return false;
         }
     }
